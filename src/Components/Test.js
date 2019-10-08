@@ -36,7 +36,7 @@ class Map extends Component {
         {...this.state.viewport}
         onViewportChange={this._onViewportChange}
         mapboxApiAccessToken = {glAPI}
-        mapStyle = {MapStyle.mapboxDefault}
+        mapStyle = {MapStyle.openMapTile}
         >
         
       </ReactMapGL>
