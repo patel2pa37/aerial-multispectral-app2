@@ -1,0 +1,47 @@
+.toolbar{
+    position: fixed;
+    width:100%;
+    background: #2F4F4F;
+    z-index: 1;
+    height: 40px
+}
+
+.toolbar__navigation{
+    display:flex;
+    align-items: center;
+    height: 100%;
+}
+
+.toolbar__logo a{
+    color:white;
+    text-decoration: none;
+}
+
+.toolbar__logo{
+    margin-left:0.5rem;
+}
+
+.toolbar_navigation-items ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.toolbar_navigation-items li{
+    padding: 0 0.5rem
+}
+
+.toolbar_navigation-items a{
+    color:white;
+    text-decoration: none;
+}
+
+.toolbar_navigation-items a:hover,
+.toolbar_navigation-items a:active{
+    color: blue
+}
+
+.spacer{
+    flex:1
+}

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+/*import React, {Component} from 'react';
 import DeckGL, {BitmapLayer} from 'deck.gl';
 import ParcellLake from './Images/test.png';
 import MapGL from 'react-map-gl';
@@ -45,9 +45,11 @@ export default class Test2 extends Component {
                 transparentColor: [0,255,255,0]
               })
           ]}
-        />*/}
+        />
+
+
       </MapGL>
     );
   }
 }
-//38.427586,-78.881445, 38.427350,-78.881247
+//38.427586,-78.881445, 38.427350,-78.881247*/

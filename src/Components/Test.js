@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+/*import React, {Component} from 'react';
 import ReactMapGL from 'react-map-gl';
 import DeckGL, {ArcLayer} from 'deck.gl';
 import './Style.css'
+
 
 
 const glAPI = "pk.eyJ1IjoicGF0ZWwycGEiLCJhIjoiY2sxMnkyczM0MDNxOTNiczluMnRyY2tsMiJ9.0maYtnNj3fQVEJ2BLfvJXA"
@@ -38,7 +39,7 @@ class Map extends Component {
         mapboxApiAccessToken = {glAPI}
         mapStyle = {MapStyle.openMapTile}
         >
-        
+       
       </ReactMapGL>
       </div>
     );
@@ -48,3 +49,6 @@ class Map extends Component {
 export default Map;
 //mapbox://styles/mapbox/satellite-v9
 //mapbox://styles/patel2pa/ck12yhywb0jyo1cn7xavx8lik
+
+
+//mapbox://patel2pa.bhh2y2q6*/
