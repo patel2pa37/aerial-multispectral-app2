@@ -16,14 +16,27 @@ const myDeckLayer = new MapboxLayer({
 
 
 export default class Application extends React.Component {
-    state = {
+  constructor(props){
+  super(props);
+  this.state = {
         viewport: {
           longitude: -78.4989250540139,
           latitude: 37.9307066927,
-          zoom: 15
-  
+          zoom: 15,
+          height: ''
         }
-      };
+      }
+      this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+}
+
+      componentWillMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+      }
+      
+      updateWindowDimensions() {
+        this.setState({ height: window.innerHeight+'px' });
+      }
 
       _onViewportChange = viewport => {
         this.setState({viewport});
@@ -32,7 +45,7 @@ export default class Application extends React.Component {
       
       handleClick = () => {
         
-        console.log('this is:');
+        console.log( window.innerHeight);
       }
   
     render() {
@@ -41,7 +54,7 @@ export default class Application extends React.Component {
         <div className = "Wrapper">
           <div className = "BaseMap"> 
             <MapGL
-            style={{ width: '100%', height: '800px'}}
+            style={{ width: '100%', height: this.state.height}}
             mapStyle="mapbox://styles/patel2pa/ck1lhtf917qtt1crviwyg2973"
             accessToken={'pk.eyJ1IjoicGF0ZWwycGEiLCJhIjoiY2sxMnkyczM0MDNxOTNiczluMnRyY2tsMiJ9.0maYtnNj3fQVEJ2BLfvJXA'}
             latitude={this.state.viewport.latitude}
@@ -62,7 +75,7 @@ export default class Application extends React.Component {
         <div className = "Button3" >
           <button >testButton3</button>
         </div>
-      
+      {console.log(this.state.height)}
       </div>
       );
     }
