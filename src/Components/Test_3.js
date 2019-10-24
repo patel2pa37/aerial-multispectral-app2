@@ -4,15 +4,9 @@ import { MapboxLayer } from '@deck.gl/mapbox';
 import DeckGL, {BitmapLayer} from 'deck.gl';
 //import 'mapbox-gl/dist/mapbox-gl.css';
 import TestImage from './Images/test.png'
+import SideDrawer from '../Components/NavigationBar/SideDrawer.js'
 import "./Style.css"
-
-const myDeckLayer = new MapboxLayer({
-  id: 'deckgl-arc',
-  type: BitmapLayer,
-  bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
-  image: TestImage,
-  transparentColor: [0,0,0,0]
-});
+import axios from 'axios';
 
 
 export default class Application extends React.Component {
@@ -23,7 +17,8 @@ export default class Application extends React.Component {
           longitude: -78.4989250540139,
           latitude: 37.9307066927,
           zoom: 15,
-          height: ''
+          height: '',
+          testData:[]
         }
       }
       this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -34,6 +29,14 @@ export default class Application extends React.Component {
         window.addEventListener('resize', this.updateWindowDimensions);
       }
       
+      componentDidMount() {
+        axios.get(`http://127.0.0.1:8000/api/`)
+          .then(res => {
+            console.log(res.data)
+            this.setState({testData:res.data})
+          })
+      }
+
       updateWindowDimensions() {
         this.setState({ height: window.innerHeight+'px' });
       }
@@ -44,13 +47,33 @@ export default class Application extends React.Component {
       
       
       handleClick = () => {
-        
-        console.log( window.innerHeight);
+        axios
+        .patch(`http://127.0.0.1:8000/api/1/`, {
+          boxChecked:true
+          })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => console.log(err.response.data));
+      }
+
+      getImages(){
+       
+        const myDeckLayer = new MapboxLayer({
+          id: 'deckgl-arc',
+          type: BitmapLayer,
+          bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
+          image: TestImage,
+          transparentColor: [0,0,0,0]
+        });
+        return myDeckLayer
       }
   
     render() {
       
       return (
+        <div>
+          <SideDrawer/>
         <div className = "Wrapper">
           <div className = "BaseMap"> 
             <MapGL
@@ -62,27 +85,29 @@ export default class Application extends React.Component {
             zoom={this.state.viewport.zoom}
             onViewportChange={this._onViewportChange}
           >
-              <CustomLayer layer={myDeckLayer} />
+              <CustomLayer layer={this.getImages()} />
           </MapGL>
         </div>
 
-        <div  className = "Button1" >
-          <button onClick={(e) => this.handleClick(e)}>testButton1</button>
+        <div className = "Button1" >
+          <button onClick={(e) => this.handleClick()}>testButton1</button>
         </div>
         <div className = "Button2">
           <button>testButton2</button>
         </div>
         <div className = "Button3" >
-          <button >testButton3</button>
+          <button>testButton3</button>
         </div>
-      {console.log(this.state.height)}
+        
+      </div>
+      {console.log(this.state.testData, 'fd')}
       </div>
       );
     }
   }
   
 
-  /*
+/*
   <Source id="_imageSource" type='image' url={"https://www.mapbox.com/images/foo.png"} coordinates={[
         [-78.49884384746906,37.933102066213365], 
         [-78.4989250540139,37.930706692753894], 
@@ -90,3 +115,52 @@ export default class Application extends React.Component {
         [-78.49509538964169,37.93302228299286]
         ]}/>
         <Layer id="overlay" source="_imageSource" type="raster"  />*/
+
+
+        /*
+import React from 'react';
+import Test3 from './Components/Test_3'
+import Toolbar from './Components/NavigationBar/ToolBar.js' 
+import SideDrawer from './Components/NavigationBar/SideDrawer.js'
+import Backdrop from './Components/NavigationBar/Backdrop.js'
+
+class App extends React.Component {
+  state = {
+    sideDrawerOpen: false,
+  }
+
+  drawerToggleClickHandler = () => {
+    this.setState(prevState => {
+      return { sideDrawerOpen: !prevState.sideDrawerOpen }
+    })
+  }
+
+  backdropClickHandler = () => {
+    this.setState({ sideDrawerOpen: false })
+  }
+
+  render() {
+    let backdrop
+    let sideDrawer
+
+    if (this.state.sideDrawerOpen) {
+      backdrop = <Backdrop click={this.backdropClickHandler} />
+      sideDrawer = <SideDrawer />
+    }
+    return (
+      <div style={{ height: '100%' }}>
+        <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
+        {sideDrawer}
+        {backdrop}
+        <main >
+          <Test3/>
+          
+        </main>
+      </div>
+    )
+  }
+}
+
+export default App
+
+        */
