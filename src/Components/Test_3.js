@@ -18,9 +18,11 @@ export default class Application extends React.Component {
           latitude: 37.9307066927,
           zoom: 15,
           height: '',
+          data:[]
         }
       }
       this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+      this.setDataState = this.setDataState.bind(this)
 }
 
       componentWillMount() {
@@ -56,7 +58,10 @@ export default class Application extends React.Component {
           .catch(err => console.log(err.response.data));
         }*/
 
-
+        setDataState(childData){
+          this.setState({data:childData})
+          
+        }
 
 
       getImages(){
@@ -74,7 +79,7 @@ export default class Application extends React.Component {
       
       return (
         <div>
-          <SideDrawer/>
+          <SideDrawer parentCallback = {this.setDataState}/>
         <div className = "Wrapper">
           <div className = "BaseMap"> 
             <MapGL
@@ -99,7 +104,6 @@ export default class Application extends React.Component {
         <div className = "Button3" >
           <button>testButton3</button>
         </div>
-        
       </div>
       </div>
       );

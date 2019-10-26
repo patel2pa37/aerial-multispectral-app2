@@ -3,7 +3,11 @@ import React from 'react'
 import './SideDrawer.css'
 import Test3 from '../../Components/Test_3'
 import axios from 'axios';
-import { async } from 'q';
+
+function getData(){
+  
+}
+
 /*
 const sideDrawer = props => {
   let drawerClasses = 'side-drawer'
@@ -100,6 +104,8 @@ export default class sideDrawer extends React.Component{
     this.state = {
     data:[]
     }
+    this.handleSave = this.handleSave.bind(this)
+    this.setstate = this.setstate.bind(this)
   }
   
 
@@ -108,9 +114,20 @@ export default class sideDrawer extends React.Component{
       .then(res => {
         console.log(res.data)
         this.setState({data:res.data})
+        this.props.parentCallback(res.data)
       })
   }
-  
+
+  setstate(){axios.get(`http://127.0.0.1:8000/api/`)
+  .then(res => {
+    //console.log(res.data)
+    this.setState({data:res.data})
+    console.log(this.state.data)
+    this.props.parentCallback(res.data)
+  })}
+
+
+
         getTest(child){
           const overLays = this.state.data
           return  overLays.map((child)=>
@@ -133,17 +150,16 @@ export default class sideDrawer extends React.Component{
 
         handleSave = () =>{
           let dataLength = this.state.data.length
-          for (let i = 1; i <= dataLength; i++){
+          var i;
+          for (i = 1; i<=dataLength;i++){
           if(i == dataLength){
 
           axios.patch(`http://127.0.0.1:8000/api/${i}/`,{
             boxChecked:this.state.data[i-1].boxChecked
           })
                   .then(res => {
-                    console.log(res, 'last call')
-
-
-          }).then(axios.get(`http://127.0.0.1:8000/api/`).then(res=>{console.log(res.data)}))
+                    console.log(res.data)
+          })
         }
 
           else{
@@ -152,10 +168,13 @@ export default class sideDrawer extends React.Component{
               boxChecked:this.state.data[i-1].boxChecked
             })
             .then(res => {
-              console.log(res)
+              console.log(res.data)
             })
           }
-        }}
+        }
+          setTimeout(this.setstate,1000)
+        }
+      
   
   render(){
     let drawerClasses = 'side-drawer'
@@ -173,7 +192,6 @@ return (
 {this.getTest()}
     </ul>
 </nav>
-{console.log(this.state.data,'gf')}
 </div>
     )
   }
