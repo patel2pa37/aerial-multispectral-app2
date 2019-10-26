@@ -2,7 +2,8 @@ import React from 'react'
 
 import './SideDrawer.css'
 import Test3 from '../../Components/Test_3'
-
+import axios from 'axios';
+import { async } from 'q';
 /*
 const sideDrawer = props => {
   let drawerClasses = 'side-drawer'
@@ -94,18 +95,67 @@ return (
 }*/
 
 export default class sideDrawer extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+    data:[]
+    }
+  }
+  
+
+  componentDidMount() {
+    axios.get(`http://127.0.0.1:8000/api/`)
+      .then(res => {
+        console.log(res.data)
+        this.setState({data:res.data})
+      })
+  }
   
         getTest(child){
-          const overLays = [1,2,3,4]
-          return  overLays.map((child, i)=>
+          const overLays = this.state.data
+          return  overLays.map((child)=>
           <li>
-            <a > <input type="checkbox" key={i}
-            onChange= {(e)=>this.props.buttonclicked(child, e)} />OverLay 1</a>
+            <a > <input type="checkbox" key={child.id}
+            onChange= {(e)=>this.handleclick(child.id)} />OverLay {child.id}</a>
             <p>Description</p>
             <p>Date </p>
           </li>
           )
         }
+
+        handleclick(child){
+          let dataCopy = JSON.parse(JSON.stringify(this.state.data))
+          console.log(dataCopy[0].boxChecked)
+          
+          dataCopy[child-1].boxChecked = !dataCopy[child-1].boxChecked
+          this.setState({data:dataCopy})
+        }
+
+        handleSave = () =>{
+          let dataLength = this.state.data.length
+          for (let i = 1; i <= dataLength; i++){
+          if(i == dataLength){
+
+          axios.patch(`http://127.0.0.1:8000/api/${i}/`,{
+            boxChecked:this.state.data[i-1].boxChecked
+          })
+                  .then(res => {
+                    console.log(res, 'last call')
+
+
+          }).then(axios.get(`http://127.0.0.1:8000/api/`).then(res=>{console.log(res.data)}))
+        }
+
+          else{
+            axios.patch(`http://127.0.0.1:8000/api/${i}/`,
+            {
+              boxChecked:this.state.data[i-1].boxChecked
+            })
+            .then(res => {
+              console.log(res)
+            })
+          }
+        }}
   
   render(){
     let drawerClasses = 'side-drawer'
@@ -119,11 +169,60 @@ return (
   <nav className="side-drawer">
     
     <ul>
-    <button>Save</button>
+    <button onClick = {(e)=>this.handleSave()}>Save</button>
 {this.getTest()}
     </ul>
 </nav>
+{console.log(this.state.data,'gf')}
 </div>
     )
   }
 }
+
+/*
+handleClick = () =>{
+  axios.patch(`http://127.0.0.1:8000/api/1/`, {
+          boxChecked:true
+          })
+          .then(res => {
+            console.log(res)
+          })
+}*/
+
+ /*
+      handleClick = () => {
+        axios
+        .patch(`http://127.0.0.1:8000/api/1/`, {
+          boxChecked:true
+          })
+          .then(res => {
+            console.log(res)
+          }).then(axios
+            .patch(`http://127.0.0.1:8000/api/2/`, {
+              boxChecked:true
+              })
+        .then(res => {
+          console.log(res)
+        }))
+          .catch(err => console.log(err.response.data));
+        }*/
+
+        /*
+handleclick = async n=>{
+  for (let i = 0, p = Promise.resolve(); i < n.length; i++) {
+    p = p.then(_ => new Promise(resolve =>
+        setTimeout(function () {
+          axios
+          .patch(`http://127.0.0.1:8000/api/1/`, {
+            boxChecked:true
+            })
+            .then(res => {
+              console.log(res)
+            })
+            resolve();
+        }, Math.random() * 1000)
+    ));
+}
+}*/
+
+//https://codeburst.io/asynchronous-code-inside-an-array-loop-c5d704006c99

@@ -18,7 +18,6 @@ export default class Application extends React.Component {
           latitude: 37.9307066927,
           zoom: 15,
           height: '',
-          testData:[]
         }
       }
       this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -29,13 +28,7 @@ export default class Application extends React.Component {
         window.addEventListener('resize', this.updateWindowDimensions);
       }
       
-      componentDidMount() {
-        axios.get(`http://127.0.0.1:8000/api/`)
-          .then(res => {
-            console.log(res.data)
-            this.setState({testData:res.data})
-          })
-      }
+
 
       updateWindowDimensions() {
         this.setState({ height: window.innerHeight+'px' });
@@ -45,20 +38,28 @@ export default class Application extends React.Component {
         this.setState({viewport});
       };
       
-      
+      /*
       handleClick = () => {
         axios
         .patch(`http://127.0.0.1:8000/api/1/`, {
           boxChecked:true
           })
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => console.log(err.response.data));
-      }
+          .then(res => {
+            console.log(res)
+          }).then(axios
+            .patch(`http://127.0.0.1:8000/api/2/`, {
+              boxChecked:true
+              })
+        .then(res => {
+          console.log(res)
+        }))
+          .catch(err => console.log(err.response.data));
+        }*/
+
+
+
 
       getImages(){
-       
         const myDeckLayer = new MapboxLayer({
           id: 'deckgl-arc',
           type: BitmapLayer,
@@ -90,7 +91,7 @@ export default class Application extends React.Component {
         </div>
 
         <div className = "Button1" >
-          <button onClick={(e) => this.handleClick()}>testButton1</button>
+          <button >testButton1</button>
         </div>
         <div className = "Button2">
           <button>testButton2</button>
@@ -100,12 +101,12 @@ export default class Application extends React.Component {
         </div>
         
       </div>
-      {console.log(this.state.testData, 'fd')}
       </div>
       );
     }
   }
   
+  //onClick={(e) => this.handleClick()}
 
 /*
   <Source id="_imageSource" type='image' url={"https://www.mapbox.com/images/foo.png"} coordinates={[
