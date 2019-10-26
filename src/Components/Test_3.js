@@ -74,6 +74,30 @@ export default class Application extends React.Component {
         });
         return myDeckLayer
       }
+      getImages1(){
+        let arr = [];
+        for(var i = 1;i<=2;i++){
+          if(i==1){
+        const myl = new MapboxLayer({
+          id: i.toString(),
+          type: BitmapLayer,
+          bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
+          image: TestImage,
+          transparentColor: [0,0,0,0]
+        });
+        arr.push(<CustomLayer layer={myl}/>)}
+      else{const myl = new MapboxLayer({
+        id: i.toString(),
+        type: BitmapLayer,
+        bounds: [-78.7889250540139,37.9307066927,-78.4950953896, 37.933022282],
+        image: TestImage,
+        transparentColor: [0,0,0,0]
+      });
+      arr.push(<CustomLayer layer={myl}/>)}
+    }
+        console.log(arr)
+        return arr
+      }
   
     render() {
       
@@ -91,7 +115,8 @@ export default class Application extends React.Component {
             zoom={this.state.viewport.zoom}
             onViewportChange={this._onViewportChange}
           >
-              <CustomLayer layer={this.getImages()} />
+              {this.getImages1()}
+              {/*<CustomLayer layer={this.getImages1()} />*/}
           </MapGL>
         </div>
 
