@@ -23,6 +23,7 @@ export default class Application extends React.Component {
       }
       this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
       this.setDataState = this.setDataState.bind(this)
+      this.getImages1 = this.getImages1.bind(this)
 }
 
       componentWillMount() {
@@ -60,29 +61,44 @@ export default class Application extends React.Component {
 
         setDataState(childData){
           this.setState({data:childData})
-          
         }
 
 
       getImages(){
-        const myDeckLayer = new MapboxLayer({
-          id: 'deckgl-arc',
-          type: BitmapLayer,
-          bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
-          image: TestImage,
-          transparentColor: [0,0,0,0]
-        });
-        return myDeckLayer
+        let arr = [];
+        if(undefined !== this.state.data && this.state.data.length){
+          console.log(this.state.data,'the state data')
+          
+          for(var i = 0; i<this.state.data.length; i++){
+            if(this.state.data[i].boxChecked === true){
+              const myl = new MapboxLayer({
+                id: i.toString(),
+                type: BitmapLayer,
+                bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
+                image: this.state.data[i].imageInfo,
+                transparentColor: [0,0,0,0]
+              })
+              arr.push(<CustomLayer layer={myl}/>)
+            }
+            else{console.log('nothing found')}
+          }
+          console.log(arr,'tretert')
+          
+        }
+        return arr;
       }
       getImages1(){
-        let arr = [];
+        const arr = []
+        if(undefined !== this.state.data && this.state.data.length){
+        console.log(this.state.data,'reyer')
+        
         for(var i = 1;i<=2;i++){
           if(i==1){
         const myl = new MapboxLayer({
           id: i.toString(),
           type: BitmapLayer,
           bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
-          image: TestImage,
+          image: this.state.data[i-1].imageInfo,
           transparentColor: [0,0,0,0]
         });
         arr.push(<CustomLayer layer={myl}/>)}
@@ -90,19 +106,23 @@ export default class Application extends React.Component {
         id: i.toString(),
         type: BitmapLayer,
         bounds: [-78.7889250540139,37.9307066927,-78.4950953896, 37.933022282],
-        image: TestImage,
+        image: this.state.data[i-1].imageInfo,
         transparentColor: [0,0,0,0]
       });
       arr.push(<CustomLayer layer={myl}/>)}
     }
         console.log(arr)
         return arr
+        }
+        
+        
       }
   
     render() {
       
       return (
         <div>
+          {console.log(this.state.data,'state data2')}
           <SideDrawer parentCallback = {this.setDataState}/>
         <div className = "Wrapper">
           <div className = "BaseMap"> 
@@ -115,7 +135,7 @@ export default class Application extends React.Component {
             zoom={this.state.viewport.zoom}
             onViewportChange={this._onViewportChange}
           >
-              {this.getImages1()}
+              {this.getImages()}
               {/*<CustomLayer layer={this.getImages1()} />*/}
           </MapGL>
         </div>
@@ -130,6 +150,7 @@ export default class Application extends React.Component {
           <button>testButton3</button>
         </div>
       </div>
+      
       </div>
       );
     }

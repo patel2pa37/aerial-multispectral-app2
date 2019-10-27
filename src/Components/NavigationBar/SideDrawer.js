@@ -132,7 +132,7 @@ export default class sideDrawer extends React.Component{
           const overLays = this.state.data
           return  overLays.map((child)=>
           <li>
-            <a > <input type="checkbox" key={child.id}
+            <a > <input type="checkbox" key={child.id} checked = {this.state.data[child.id-1].boxChecked}
             onChange= {(e)=>this.handleclick(child.id)} />OverLay {child.id}</a>
             <p>Description</p>
             <p>Date </p>
@@ -142,8 +142,6 @@ export default class sideDrawer extends React.Component{
 
         handleclick(child){
           let dataCopy = JSON.parse(JSON.stringify(this.state.data))
-          console.log(dataCopy[0].boxChecked)
-          
           dataCopy[child-1].boxChecked = !dataCopy[child-1].boxChecked
           this.setState({data:dataCopy})
         }
