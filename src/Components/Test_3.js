@@ -23,7 +23,8 @@ export default class Application extends React.Component {
       }
       this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
       this.setDataState = this.setDataState.bind(this)
-      this.getImages1 = this.getImages1.bind(this)
+      //this.getImages1 = this.getImages1.bind(this)
+      this.getImages = this.getImages.bind(this)
 }
 
       componentWillMount() {
@@ -65,14 +66,14 @@ export default class Application extends React.Component {
 
 
       getImages(){
-        let arr = [];
+        const arr = [];
         if(undefined !== this.state.data && this.state.data.length){
           console.log(this.state.data,'the state data')
           
           for(var i = 0; i<this.state.data.length; i++){
             if(this.state.data[i].boxChecked === true){
               const myl = new MapboxLayer({
-                id: i.toString(),
+                id: (1+i).toString(),
                 type: BitmapLayer,
                 bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
                 image: this.state.data[i].imageInfo,
@@ -82,11 +83,14 @@ export default class Application extends React.Component {
             }
             else{console.log('nothing found')}
           }
-          console.log(arr,'tretert')
+          
           
         }
+        console.log(arr,'tretert')
         return arr;
       }
+
+      /*
       getImages1(){
         const arr = []
         if(undefined !== this.state.data && this.state.data.length){
@@ -116,17 +120,10 @@ export default class Application extends React.Component {
         }
         
         
-      }
-  
-    render() {
-      
-      return (
-        <div>
-          {console.log(this.state.data,'state data2')}
-          <SideDrawer parentCallback = {this.setDataState}/>
-        <div className = "Wrapper">
-          <div className = "BaseMap"> 
-            <MapGL
+      }*/
+
+      renderimage(){
+       return <MapGL
             style={{ width: '100%', height: this.state.height}}
             mapStyle="mapbox://styles/patel2pa/ck1lhtf917qtt1crviwyg2973"
             accessToken={'pk.eyJ1IjoicGF0ZWwycGEiLCJhIjoiY2sxMnkyczM0MDNxOTNiczluMnRyY2tsMiJ9.0maYtnNj3fQVEJ2BLfvJXA'}
@@ -138,6 +135,19 @@ export default class Application extends React.Component {
               {this.getImages()}
               {/*<CustomLayer layer={this.getImages1()} />*/}
           </MapGL>
+      }
+
+
+  
+    render() {
+      
+      return (
+        <div>
+          {console.log(this.state.data,'state data2')}
+          <SideDrawer parentCallback = {this.setDataState}/>
+        <div className = "Wrapper">
+          <div className = "BaseMap"> 
+            {this.renderimage()}
         </div>
 
         <div className = "Button1" >
