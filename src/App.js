@@ -1,5 +1,6 @@
 import React from 'react';
 import Test3 from './Components/Test_3'
+import Test2 from './Components/Test_2'
 import Toolbar from './Components/NavigationBar/ToolBar.js' 
 //import SideDrawer from './Components/NavigationBar/SideDrawer.js'
 import Backdrop from './Components/NavigationBar/Backdrop.js'

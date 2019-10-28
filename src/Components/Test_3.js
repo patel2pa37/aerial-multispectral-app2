@@ -7,6 +7,9 @@ import TestImage from './Images/test.png'
 import SideDrawer from '../Components/NavigationBar/SideDrawer.js'
 import "./Style.css"
 import axios from 'axios';
+import Draw from '@urbica/react-map-gl-draw';
+
+import { EditableGeoJsonLayer, DrawPolygonMode } from 'nebula.gl';
 
 
 const data2 = {
@@ -578,6 +581,16 @@ const data2 = {
 };
 
 
+const myFeatureCollection = {
+  type: 'FeatureCollection',
+  features: [
+    /* insert features here */
+    
+  ]
+};
+
+const selectedFeatureIndexes = [];
+
 export default class Application extends React.Component {
   constructor(props){
   super(props);
@@ -589,7 +602,9 @@ export default class Application extends React.Component {
           height: ''
         },
         data:[],
-        Grid: false
+        Grid: false,
+        data2:myFeatureCollection,
+        features: [],
       }
       this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
       this.setDataState = this.setDataState.bind(this)
@@ -693,6 +708,7 @@ export default class Application extends React.Component {
       }*/
 
       renderimage(){
+        
        return <MapGL
             style={{ width: '100%', height: this.state.height}}
             mapStyle="mapbox://styles/patel2pa/ck12yhywb0jyo1cn7xavx8lik"
@@ -728,6 +744,10 @@ export default class Application extends React.Component {
             zoom={this.state.viewport.zoom}
             onViewportChange={this._onViewportChange}
           >
+            <Draw
+      onDrawCreate={({features}) => this.setState({features})}
+      onDrawUpdate={({features}) => this.setState({features})}
+    />
               {this.getImages()}<Source id="maine" type="geojson" data={data2} />
           <Layer
               id="maine"
@@ -750,6 +770,7 @@ export default class Application extends React.Component {
           onViewportChange={this._onViewportChange}
         >
             {this.getImages()} 
+            <CustomLayer layer = {this.renderDrawLayer()}/>
         </MapGL>
         
         }
@@ -767,9 +788,27 @@ export default class Application extends React.Component {
       getGrid(){
         this.setState(prevState => ({Grid:!prevState.Grid}))
       }
+
+      renderDrawLayer(){
+        const layer_ = new EditableGeoJsonLayer({
+          id: 'geojson-layer',
+          data: this.state.data,
+          mode: DrawPolygonMode,
+          selectedFeatureIndexes,
+    
+          onEdit: ({ updatedData }) => {
+            this.setState({
+              data2: updatedData,
+            });
+          }
+        });
+        return layer_
+      }
   
     render() {
       
+
+
       return (
         <div>
           {console.log(this.state.data,'state data2')}

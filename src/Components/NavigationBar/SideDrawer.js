@@ -124,7 +124,7 @@ export default class sideDrawer extends React.Component{
     this.setState({data:res.data})
     console.log(this.state.data)
     this.props.parentCallback(res.data)
-    window.location.reload();
+    //window.location.reload();
 
   })}
 
@@ -189,7 +189,7 @@ return (
     
     <ul>
     <button onClick = {(e)=>this.handleSave()}>Save</button>
-{this.getTest()}
+      {this.getTest()}
     </ul>
 </nav>
 </div>
