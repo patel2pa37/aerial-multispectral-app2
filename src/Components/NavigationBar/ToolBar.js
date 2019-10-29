@@ -15,14 +15,15 @@ const toolbar = props => (
       <div className="toolbar_navigation-items">
         <ul>
         <li>
-            <a href="/">test1</a>
+            <a href="/">Login</a>
           </li>
+          {/*
           <li>
             <a href="/">test1</a>
           </li>
           <li>
             <a href="/">test2</a>
-          </li>
+          </li>*/}
         </ul>
       </div>
     </nav>

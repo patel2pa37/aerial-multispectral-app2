@@ -124,7 +124,7 @@ export default class sideDrawer extends React.Component{
     this.setState({data:res.data})
     console.log(this.state.data)
     this.props.parentCallback(res.data)
-    //window.location.reload();
+    window.location.reload();
 
   })}
 
@@ -136,7 +136,7 @@ export default class sideDrawer extends React.Component{
           <li>
             <a > <input type="checkbox" key={child.id} checked = {this.state.data[child.id-1].boxChecked}
             onChange= {(e)=>this.handleclick(child.id)} />OverLay {child.id}</a>
-            <p>Description</p>
+            <p>{this.state.data[child.id-1].content}</p>
             <p>Date </p>
           </li>
           )
