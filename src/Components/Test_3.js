@@ -739,10 +739,7 @@ export default class Application extends React.Component {
             zoom={this.state.viewport.zoom}
             onViewportChange={this._onViewportChange}
           >
-            <Draw
-      onDrawCreate={({features}) => this.setState({features})}
-      onDrawUpdate={({features}) => this.setState({features})}
-    />
+            
               {this.getImages()}<Source id="maine" type="geojson" data={data2} />
           <Layer
               id="maine"
