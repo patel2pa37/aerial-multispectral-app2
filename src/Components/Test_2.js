@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import DeckGL, {BitmapLayer} from 'deck.gl';
 import ParcellLake from './Images/test.png';
-import MapGL from 'react-map-gl';
-import Draw from '@urbica/react-map-gl-draw';
+import MapGL,{Marker, GeolocateControl} from 'react-map-gl';
+import Pin from './NavigationBar/pin'
 
 import SideDrawer from './NavigationBar/SideDrawer'
 import './Style.css'
-import { EditableGeoJsonLayer, DrawPolygonMode } from 'nebula.gl';
+//import { EditableGeoJsonLayer, DrawPolygonMode } from 'nebula.gl';
 
 const myFeatureCollection = {
   type: 'FeatureCollection',
@@ -22,7 +22,14 @@ const MapStyle = {
     openMapTile: 'https://api.maptiler.com/maps/hybrid/style.json?key=gQCnC8ZYWGvM8WdKZNmW'
   }
 
-
+  const geolocateStyle = {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    margin: 10,
+    
+  };
+/*
   export default class Test2 extends Component {
 
         state = {
@@ -47,41 +54,37 @@ const MapStyle = {
  
   
     render() {
-      const layer = new EditableGeoJsonLayer({
-        id: 'geojson-layer',
-        data: this.state.data,
-        mode: DrawPolygonMode,
-        selectedFeatureIndexes,
-  
-        onEdit: ({ updatedData }) => {
-          this.setState({
-            data: updatedData,
-          });
-        }
-      });
+     
       return (
-   
-        <MapGL
-          {...this.state.viewport}
-          width="50vw"
-          height="50vw"
-          onViewportChange={this._onViewportChange}
-          mapStyle = {MapStyle.mapboxDefault}
-          mapboxApiAccessToken={TOKEN}
-        >
-          
-          <Draw
-      onDrawCreate={({features}) => this.setState({features})}
-      onDrawUpdate={({features}) => this.setState({features})}
-    />
-      {/*this.getImages()*/}
-  
-        </MapGL>
+        <div>
+        <div>
+          {<SideDrawer parentCallback = {this.setDataState}/>}
+          <div className = "BaseMap"> 
+
+          <MapGL
+            {...this.state.viewport}
+            width={this.state.width}
+            height={this.state.height}
+            onViewportChange={this._onViewportChange}
+            mapStyle = {MapStyle.mapboxDefault}
+            mapboxApiAccessToken={TOKEN}
+          >
+            
+            
+    
+          </MapGL>
+          </div>
+          <div className = "Button1" >
+              <button onClick = {(e)=>this.getGrid()}>Grid {this.GridButton()}</button>
+            </div>
+          </div>
+          </div>
+        
         
       );
     }
-  }
-  /*
+  }*/
+  
 export default class Test2 extends Component {
   constructor(props){
     super(props);
@@ -94,11 +97,12 @@ export default class Test2 extends Component {
       width:'',
       height:'',
       data1: myFeatureCollection,
-      data:[]
+      data:[],
+      markerData:[]
     }
     this.setDataState = this.setDataState.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
-    this.drawPolygons = this.drawPolygons.bind(this)
+
     this._onViewportChange = this._onViewportChange.bind(this)
   }
 
@@ -122,7 +126,7 @@ export default class Test2 extends Component {
   getImages(){
     const arr = [];
     if(undefined !== this.state.data && this.state.data.length){
-      console.log(this.state.data,'the state data')
+     
       
       for(var i = 0; i<this.state.data.length; i++){
         if(this.state.data[i].boxChecked === true){
@@ -138,12 +142,12 @@ export default class Test2 extends Component {
             ]}
           />)
         }
-        else{console.log('nothing found')}
+        else{}
       }
       
       
     }
-    console.log(arr,'tretert')
+    
     return arr;
   }
 
@@ -160,37 +164,29 @@ export default class Test2 extends Component {
     }
   }
 
-  drawPolygons(){
-    const layer = new EditableGeoJsonLayer({
-      id: 'geojson-layer',
-      data1: this.state.data1,
-      mode: DrawPolygonMode,
-      selectedFeatureIndexes,
+  _onClickMethod(map,e){
+    console.log(e.lngLat)
+    this.setState({markerData:e.lngLat})
+  }
+  
+  renderMarkers(){
+    let markerArray = []
+    if(undefined !== this.state.markerData && this.state.markerData.length){
+      return  <Marker latitude={this.state.markerData[1]} longitude={this.state.markerData[0]} >
+      <Pin size={20} />
+      </Marker>
 
-      onEdit: ({ updatedData }) => {
-        this.setState({
-          data1: updatedData,
-        });
-      }
-    });
-    return layer
+    }
   }
 
   render() {
-    const layer = new EditableGeoJsonLayer({
-      id: 'geojson-layer',
-      data1: this.state.data1,
-      mode: DrawPolygonMode,
-      selectedFeatureIndexes,
+    let sideDrawer
 
-      onEdit: ({ updatedData }) => {
-        this.setState({
-          data1: updatedData,
-        });
+      if (this.props.parentCallback) {
+        sideDrawer =  <SideDrawer parentCallback = {this.setDataState}/>
       }
-    });
-    return (
- 
+    return (<div>
+      {sideDrawer}
       <MapGL
         {...this.state.viewport}
         width={this.state.width}
@@ -198,16 +194,25 @@ export default class Test2 extends Component {
         onViewportChange={this._onViewportChange}
         mapStyle = {MapStyle.mapboxDefault}
         mapboxApiAccessToken={TOKEN}
+        onClick = {(e)=>this._onClickMethod(MapGL,e)}
       >
         
-        <DeckGL {...this.state.viewport} layers={[layer]} />
+      
+      {this.renderMarkers()}
+
     {this.getImages()}
+    <GeolocateControl
+          style={geolocateStyle}
+          positionOptions={{enableHighAccuracy: true}}
+          trackUserLocation={true}
+        />
 
       </MapGL>
-      
+     
+      </div>
     );
   }
-}*/
+}
 
 //38.427586,-78.881445, 38.427350,-78.881247
 

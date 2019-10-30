@@ -4,9 +4,6 @@ import './SideDrawer.css'
 import Test3 from '../../Components/Test_3'
 import axios from 'axios';
 
-function getData(){
-  
-}
 
 /*
 const sideDrawer = props => {
@@ -124,7 +121,7 @@ export default class sideDrawer extends React.Component{
     this.setState({data:res.data})
     console.log(this.state.data)
     this.props.parentCallback(res.data)
-    window.location.reload();
+    //window.location.reload();
 
   })}
 

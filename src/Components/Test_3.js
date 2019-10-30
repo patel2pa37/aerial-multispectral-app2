@@ -807,12 +807,16 @@ export default class Application extends React.Component {
   
     render() {
       
+      let sideDrawer
 
+      if (this.props.parentCallback) {
+        sideDrawer =  <SideDrawer parentCallback = {this.setDataState}/>
+      }
 
       return (
         <div>
           {console.log(this.state.data,'state data2')}
-          <SideDrawer parentCallback = {this.setDataState}/>
+         {sideDrawer}
         <div className = "Wrapper">
           <div className = "BaseMap"> 
             {this.RenderGrid()}
