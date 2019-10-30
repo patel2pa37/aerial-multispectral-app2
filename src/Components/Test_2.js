@@ -148,7 +148,7 @@ export default class Test2 extends Component {
     <GeolocateControl
           style={geolocateStyle}
           positionOptions={{enableHighAccuracy: false}}
-          //trackUserLocation = {true}
+          trackUserLocation = {true}
     />
 
       </MapGL>
