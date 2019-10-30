@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import DeckGL, {BitmapLayer} from 'deck.gl';
-import ParcellLake from './Images/test.png';
 import MapGL,{Marker, GeolocateControl} from 'react-map-gl';
 import Pin from './NavigationBar/pin'
 
 import SideDrawer from './NavigationBar/SideDrawer'
 import './Style.css'
-//import { EditableGeoJsonLayer, DrawPolygonMode } from 'nebula.gl';
 
 const myFeatureCollection = {
   type: 'FeatureCollection',

@@ -2,14 +2,9 @@ import React from 'react';
 import MapGL, {Source, Layer, CustomLayer} from '@urbica/react-map-gl';
 import { MapboxLayer } from '@deck.gl/mapbox';
 import DeckGL, {BitmapLayer} from 'deck.gl';
-//import 'mapbox-gl/dist/mapbox-gl.css';
-import TestImage from './Images/test.png'
 import SideDrawer from '../Components/NavigationBar/SideDrawer.js'
 import "./Style.css"
-import axios from 'axios';
-import Draw from '@urbica/react-map-gl-draw';
 
-import { EditableGeoJsonLayer, DrawPolygonMode } from 'nebula.gl';
 
 
 const data2 = {
@@ -770,7 +765,7 @@ export default class Application extends React.Component {
           onViewportChange={this._onViewportChange}
         >
             {this.getImages()} 
-            <CustomLayer layer = {this.renderDrawLayer()}/>
+
         </MapGL>
         
         }
@@ -789,21 +784,7 @@ export default class Application extends React.Component {
         this.setState(prevState => ({Grid:!prevState.Grid}))
       }
 
-      renderDrawLayer(){
-        const layer_ = new EditableGeoJsonLayer({
-          id: 'geojson-layer',
-          data: this.state.data,
-          mode: DrawPolygonMode,
-          selectedFeatureIndexes,
-    
-          onEdit: ({ updatedData }) => {
-            this.setState({
-              data2: updatedData,
-            });
-          }
-        });
-        return layer_
-      }
+
   
     render() {
       
