@@ -29,61 +29,7 @@ const MapStyle = {
     margin: 10,
     
   };
-/*
-  export default class Test2 extends Component {
 
-        state = {
-        viewport: {
-          longitude: -78.4989,
-          latitude: 37.9307,
-          zoom: 15,
-        },
-        features: [],
-        width:'',
-        height:'',
-        data1: myFeatureCollection,
-        data:myFeatureCollection
-    }
-  
-     
-    
-    _onViewportChange = viewport => {
-      this.setState({viewport});
-    };
-  
- 
-  
-    render() {
-     
-      return (
-        <div>
-        <div>
-          {<SideDrawer parentCallback = {this.setDataState}/>}
-          <div className = "BaseMap"> 
-
-          <MapGL
-            {...this.state.viewport}
-            width={this.state.width}
-            height={this.state.height}
-            onViewportChange={this._onViewportChange}
-            mapStyle = {MapStyle.mapboxDefault}
-            mapboxApiAccessToken={TOKEN}
-          >
-            
-            
-    
-          </MapGL>
-          </div>
-          <div className = "Button1" >
-              <button onClick = {(e)=>this.getGrid()}>Grid {this.GridButton()}</button>
-            </div>
-          </div>
-          </div>
-        
-        
-      );
-    }
-  }*/
   
 export default class Test2 extends Component {
   constructor(props){
@@ -203,9 +149,9 @@ export default class Test2 extends Component {
     {this.getImages()}
     <GeolocateControl
           style={geolocateStyle}
-          positionOptions={{enableHighAccuracy: true}}
-          trackUserLocation={true}
-        />
+          positionOptions={{enableHighAccuracy: false}}
+          //trackUserLocation = {true}
+    />
 
       </MapGL>
      
@@ -214,11 +160,37 @@ export default class Test2 extends Component {
   }
 }
 
-//38.427586,-78.881445, 38.427350,-78.881247
+
+
 
 /*
+  export default class Test2 extends Component {
 
-<div>
+        state = {
+        viewport: {
+          longitude: -78.4989,
+          latitude: 37.9307,
+          zoom: 15,
+        },
+        features: [],
+        width:'',
+        height:'',
+        data1: myFeatureCollection,
+        data:myFeatureCollection
+    }
+  
+     
+    
+    _onViewportChange = viewport => {
+      this.setState({viewport});
+    };
+  
+ 
+  
+    render() {
+     
+      return (
+        <div>
         <div>
           {<SideDrawer parentCallback = {this.setDataState}/>}
           <div className = "BaseMap"> 
@@ -232,8 +204,7 @@ export default class Test2 extends Component {
             mapboxApiAccessToken={TOKEN}
           >
             
-            <DeckGL {...this.state.viewport} layers={[layer]} />
-        {this.getImages()}
+            
     
           </MapGL>
           </div>
@@ -242,6 +213,8 @@ export default class Test2 extends Component {
             </div>
           </div>
           </div>
-
-
-*/
+        
+        
+      );
+    }
+  }*/
