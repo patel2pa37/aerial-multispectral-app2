@@ -3,6 +3,50 @@ import Test2 from './Components/Test_2'
 import Toolbar from './Components/NavigationBar/ToolBar.js' 
 import Backdrop from './Components/NavigationBar/Backdrop.js'
 
+
+class App extends React.Component {
+  state = {
+      sideDrawerOpen: false,  
+    }
+
+  /*
+    method sets the sideDraweropen to true or false
+  */
+  drawerToggleClickHandler = () => {
+    this.setState(prevState => {
+      return { sideDrawerOpen: !prevState.sideDrawerOpen }
+    })
+  }
+
+  
+  backdropClickHandler = () => {
+    this.setState({ sideDrawerOpen: false })
+  }
+
+  render() {
+    let backdrop
+    let sideDrawer
+
+    if (this.state.sideDrawerOpen) {
+      backdrop = <Backdrop click={this.backdropClickHandler} />
+    }
+
+    return (
+      <div style={{ height: '100%' }}>
+        <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
+      {backdrop}
+        
+        <main >
+          <Test2 parentCallback = {this.state.sideDrawerOpen}/>
+          
+        </main>
+      </div>
+    )
+  }
+}
+
+export default App
+
 /*
 class App extends React.Component {
   constructor(props) {
@@ -77,43 +121,3 @@ function App() {
 
 export default App;
 */
-
-class App extends React.Component {
-  state = {
-      sideDrawerOpen: false,  
-    }
-  
-
-  drawerToggleClickHandler = () => {
-    this.setState(prevState => {
-      return { sideDrawerOpen: !prevState.sideDrawerOpen }
-    })
-  }
-
-  backdropClickHandler = () => {
-    this.setState({ sideDrawerOpen: false })
-  }
-
-  render() {
-    let backdrop
-    let sideDrawer
-
-    if (this.state.sideDrawerOpen) {
-      backdrop = <Backdrop click={this.backdropClickHandler} />
-    }
-
-    return (
-      <div style={{ height: '100%' }}>
-        <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
-      {backdrop}
-        
-        <main >
-          <Test2 parentCallback = {this.state.sideDrawerOpen}/>
-          
-        </main>
-      </div>
-    )
-  }
-}
-
-export default App

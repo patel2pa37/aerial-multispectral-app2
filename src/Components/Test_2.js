@@ -2,18 +2,10 @@ import React, {Component} from 'react';
 import DeckGL, {BitmapLayer} from 'deck.gl';
 import MapGL,{Marker, GeolocateControl} from 'react-map-gl';
 import Pin from './NavigationBar/pin'
-
 import SideDrawer from './NavigationBar/SideDrawer'
 import './Style.css'
 
-const myFeatureCollection = {
-  type: 'FeatureCollection',
-  features: [
-    /* insert features here */
-  ]
-};
 
-const selectedFeatureIndexes = [];
 const TOKEN = 'pk.eyJ1IjoicGF0ZWwycGEiLCJhIjoiY2sxMnkyczM0MDNxOTNiczluMnRyY2tsMiJ9.0maYtnNj3fQVEJ2BLfvJXA'; // Set your mapbox token here
 const MapStyle = {
     mapboxDefault:'mapbox://styles/patel2pa/ck12yhywb0jyo1cn7xavx8lik',
@@ -40,7 +32,6 @@ export default class Test2 extends Component {
       },
       width:'',
       height:'',
-      data1: myFeatureCollection,
       data:[],
       markerData:[]
     }
