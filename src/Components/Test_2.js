@@ -37,7 +37,7 @@ export default class Test2 extends Component {
     }
     this.setDataState = this.setDataState.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
-
+    this._onClickMethod = this._onClickMethod.bind(this)
     this._onViewportChange = this._onViewportChange.bind(this)
   }
 
@@ -100,18 +100,24 @@ export default class Test2 extends Component {
   }
 
   _onClickMethod(map,e){
-    console.log(e.lngLat)
-    this.setState({markerData:e.lngLat})
+    //console.log(e.lngLat)
+    //this.setState({markerData:e.lngLat})
+  
+    var joined = this.state.markerData.concat([e.lngLat]);
+    this.setState({ markerData: joined })
+    console.log(this.state.markerData)
   }
   
   renderMarkers(){
     let markerArray = []
     if(undefined !== this.state.markerData && this.state.markerData.length){
-      return  <Marker latitude={this.state.markerData[1]} longitude={this.state.markerData[0]} >
+      for(var i = 0;i<this.state.markerData.length;i++){
+      markerArray.push(<Marker latitude={this.state.markerData[i][1]} longitude={this.state.markerData[i][0]} >
       <Pin size={20} />
-      </Marker>
-
+      </Marker>)
+      }
     }
+    return markerArray
   }
 
   render() {
