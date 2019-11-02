@@ -4,6 +4,7 @@ import MapGL,{Marker, GeolocateControl, Popup} from 'react-map-gl'
 import Pin from './NavigationBar/pin'
 import SideDrawer from './NavigationBar/SideDrawer'
 import './Style.css'
+import Test_ from './Images/test.jpg'
 //node_modules/react-map-gl/dist/es6/index
 
 const TOKEN = 'pk.eyJ1IjoicGF0ZWwycGEiLCJhIjoiY2sxMnkyczM0MDNxOTNiczluMnRyY2tsMiJ9.0maYtnNj3fQVEJ2BLfvJXA'; // Set your mapbox token here
@@ -186,6 +187,17 @@ testPopup = (lat, lon) => {
         {this.getImages()}
       {this.testRenderMarker()}
       {this.testPopup()}
+      <DeckGL
+            viewState={this.state.viewport}
+            layers={[
+              new BitmapLayer({
+                  id: 'bitmap-layer',
+                  bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
+                  image: Test_,
+                  transparentColor: [0,0,0,0]
+                })
+            ]}
+          />
     
     <GeolocateControl
           style={geolocateStyle}
