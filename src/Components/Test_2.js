@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import DeckGL, {BitmapLayer} from 'deck.gl';
-import MapGL,{Marker, GeolocateControl} from 'react-map-gl';
+import MapGL,{Marker, GeolocateControl, Popup} from '../../node_modules/react-map-gl/dist/es6/index'
 import Pin from './NavigationBar/pin'
 import SideDrawer from './NavigationBar/SideDrawer'
 import './Style.css'
-
+//node_modules/react-map-gl/dist/es6/index
 
 const TOKEN = 'pk.eyJ1IjoicGF0ZWwycGEiLCJhIjoiY2sxMnkyczM0MDNxOTNiczluMnRyY2tsMiJ9.0maYtnNj3fQVEJ2BLfvJXA'; // Set your mapbox token here
 const MapStyle = {
@@ -33,7 +33,9 @@ export default class Test2 extends Component {
       width:'',
       height:'',
       data:[],
-      markerData:[]
+      markerData:[[-78.49710828437009, 37.93041227710639],[-78.49693662299572, 37.93120774351641],[-78.49549895896115, 37.930767699330175]],
+      popupInfo:true
+      
     }
     this.setDataState = this.setDataState.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
@@ -105,20 +107,61 @@ export default class Test2 extends Component {
   
     var joined = this.state.markerData.concat([e.lngLat]);
     this.setState({ markerData: joined })
-    console.log(this.state.markerData)
+    console.log(e)
   }
   
+  _onDblClickMethod(e){
+    console.log(e.target)
+  }
+
   renderMarkers(){
     let markerArray = []
     if(undefined !== this.state.markerData && this.state.markerData.length){
       for(var i = 0;i<this.state.markerData.length;i++){
-      markerArray.push(<Marker latitude={this.state.markerData[i][1]} longitude={this.state.markerData[i][0]} >
-      <Pin size={20} />
+      markerArray.push(<Marker latitude={this.state.markerData[i][1]} longitude={this.state.markerData[i][0]}>
+      <Pin size={20} key = {i} onClick = {()=>this._onDblClickMethod(i)} />
       </Marker>)
       }
+      console.log(markerArray)
     }
     return markerArray
   }
+
+  testRenderMarker(){
+    const markerData_ = this.state.markerData
+    console.log(this.state.markerData)
+    return this.state.markerData.map((child, index)=>
+    <Marker latitude={this.state.markerData[index][1]} longitude={this.state.markerData[index][0]} >
+      <Pin size={20} key={index} onClick={(e)=>this.testclick(e,index)} />
+    </Marker>)
+
+  }
+
+  testclick(e, i){
+ console.log(i)
+ this.setState(state => {
+  const markerData = state.markerData.filter((item, j) => i !== j);
+  return {
+    markerData,
+  };
+});
+
+};
+
+testPopup = (lat, lon) => {
+  return this.state.markerData.map((child, index)=> 
+  <Popup
+        tipSize={5}
+        anchor="bottom"
+        longitude={this.state.markerData[index][0]}
+        latitude={ this.state.markerData[index][1]}
+        closeOnClick={false}
+        onClose={() => this.setState({popupInfo: false})}
+      >
+        <input/>
+      </Popup>)
+}
+  
 
   render() {
     let sideDrawer
@@ -135,12 +178,14 @@ export default class Test2 extends Component {
         onViewportChange={this._onViewportChange}
         mapStyle = {MapStyle.mapboxDefault}
         mapboxApiAccessToken={TOKEN}
-        onClick = {(e)=>this._onClickMethod(MapGL,e)}
+        //onClick = {(e)=>this._onClickMethod(MapGL, e)}
       >
-        
+        <Marker key = {1} latitude={37.9307066927} longitude={-78.4989250540139} captureClick = {true} >
+          <Pin size={20} key = {1} onClick = {()=>console.log('tt')}/>
+        </Marker>)
       
-      {this.renderMarkers()}
-
+      {this.testRenderMarker()}
+      {this.testPopup()}
     {this.getImages()}
     <GeolocateControl
           style={geolocateStyle}
