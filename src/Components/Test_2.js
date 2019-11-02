@@ -14,7 +14,7 @@ const MapStyle = {
 
   const geolocateStyle = {
     position: 'absolute',
-    bottom: 0,
+    top: 0,
     right: 0,
     margin: 10,
     
@@ -49,7 +49,7 @@ export default class Test2 extends Component {
     }
 
     updateWindowDimensions() {
-      this.setState({ height: window.innerHeight+'px',width:window.innerWidth+'px' });
+      this.setState({ height: window.innerHeight-40+'px',width:window.innerWidth+'px' });
     }
   
   _onViewportChange = viewport => {
@@ -161,6 +161,26 @@ testPopup = (lat, lon) => {
         <input/>
       </Popup>)
 }
+
+_renderDrawTools = () => {
+  // copy from mapbox
+  return (
+    <div className="mapboxgl-ctrl-top-left">
+      <div className="mapboxgl-ctrl-group mapboxgl-ctrl">
+        <button
+          className="mapbox-gl-draw_ctrl-draw-btn mapbox-gl-draw_polygon"
+          title="Polygon tool (p)"
+          
+        />
+        <button
+          className="mapbox-gl-draw_ctrl-draw-btn mapbox-gl-draw_trash"
+          title="Delete"
+         
+        />
+      </div>
+    </div>
+  );
+};
   
 
   render() {
@@ -178,7 +198,7 @@ testPopup = (lat, lon) => {
         onViewportChange={this._onViewportChange}
         mapStyle = {MapStyle.mapboxDefault}
         mapboxApiAccessToken={TOKEN}
-        onClick = {(e)=>this._onClickMethod(MapGL, e)}
+        //onClick = {(e)=>this._onClickMethod(MapGL, e)}
       >
         <Marker key = {1} latitude={37.9307066927} longitude={-78.4989250540139} captureClick = {true} >
           <Pin size={20} key = {1} onClick = {()=>console.log('tt')}/>
@@ -186,13 +206,12 @@ testPopup = (lat, lon) => {
         {this.getImages()}
       {this.testRenderMarker()}
       {this.testPopup()}
-    
     <GeolocateControl
           style={geolocateStyle}
           positionOptions={{enableHighAccuracy: false}}
           trackUserLocation = {true}
     />
-
+{this._renderDrawTools()}
       </MapGL>
      
       </div>

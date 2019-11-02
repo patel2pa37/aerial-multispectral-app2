@@ -32,7 +32,7 @@ class App extends React.Component {
     }
 
     return (
-      <div style={{ height: '100%' }}>
+      <div >
         <Toolbar drawerClickHandler={this.drawerToggleClickHandler} />
       {backdrop}
         
