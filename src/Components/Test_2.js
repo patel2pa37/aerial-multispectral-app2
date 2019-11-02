@@ -74,7 +74,7 @@ export default class Test2 extends Component {
                   id: 'bitmap-layer',
                   bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
                   image: this.state.data[i].imageInfo,
-                  transparentColor: [0,255,255,0]
+                  transparentColor: [0,0,0,0]
                 })
             ]}
           />)
@@ -178,15 +178,15 @@ testPopup = (lat, lon) => {
         onViewportChange={this._onViewportChange}
         mapStyle = {MapStyle.mapboxDefault}
         mapboxApiAccessToken={TOKEN}
-        //onClick = {(e)=>this._onClickMethod(MapGL, e)}
+        onClick = {(e)=>this._onClickMethod(MapGL, e)}
       >
         <Marker key = {1} latitude={37.9307066927} longitude={-78.4989250540139} captureClick = {true} >
           <Pin size={20} key = {1} onClick = {()=>console.log('tt')}/>
         </Marker>)
-      
+        {this.getImages()}
       {this.testRenderMarker()}
       {this.testPopup()}
-    {this.getImages()}
+    
     <GeolocateControl
           style={geolocateStyle}
           positionOptions={{enableHighAccuracy: false}}
