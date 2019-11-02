@@ -34,9 +34,10 @@ export default class Test2 extends Component {
       height:'',
       data:[],
       markerData:[[-78.49710828437009, 37.93041227710639],[-78.49693662299572, 37.93120774351641],[-78.49549895896115, 37.930767699330175]],
-      popupInfo:true,
+      popupInfo:null,
       delete:false,
-      add: false
+      add: false,
+      inputData:[]
     }
     this.setDataState = this.setDataState.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
@@ -147,38 +148,39 @@ export default class Test2 extends Component {
   return {
     markerData,
   };
-});}
+})
+}
 };
 
 testPopup = (lat, lon) => {
+  const {popupInfo} = this.state
   return this.state.markerData.map((child, index)=> 
-  <Popup
+  popupInfo && (<Popup
         tipSize={5}
         anchor="bottom"
         longitude={this.state.markerData[index][0]}
         latitude={ this.state.markerData[index][1]}
         closeOnClick={false}
-        onClose={() => this.setState({popupInfo: false})}
+        onClose={() => this.setState({popupInfo: null})}
       >
         <input/>
-      </Popup>)
+      </Popup>))
 }
 
 _renderDrawTools = () => {
   // copy from mapbox
   return (
-    <div className="mapboxgl-ctrl-top-left">
-      <div className="mapboxgl-ctrl-group mapboxgl-ctrl">
+    <div className='Button1'>
+      <div >
         <button
-          className="mapbox-gl-draw_ctrl-draw-btn mapbox-gl-draw_polygon"
           title="Polygon tool (p)"
           onClick = {()=>this.setState({add:true})}
-        />
+        >Add pins</button>
         <button
-          className="mapbox-gl-draw_ctrl-draw-btn mapbox-gl-draw_trash"
+          className="Button"
           title="Delete"
           onClick = {()=>this.setState({add:false,delete:true})}
-        />
+        >Delete pins</button>
       </div>
     </div>
   );
@@ -202,9 +204,7 @@ _renderDrawTools = () => {
         mapboxApiAccessToken={TOKEN}
         onClick = {(e)=>this._onClickMethod(MapGL, e)}
       >
-        <Marker key = {1} latitude={37.9307066927} longitude={-78.4989250540139} captureClick = {true} >
-          <Pin size={20} key = {1} onClick = {()=>console.log('tt')}/>
-        </Marker>)
+      
         {this.getImages()}
       {this.testRenderMarker()}
       {this.testPopup()}

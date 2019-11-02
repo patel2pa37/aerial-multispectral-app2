@@ -9,21 +9,17 @@
 }
 
 .Button1{
-    width: 10%;
-    height: 26%;
     position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: 6;
+    top: 0;
+    left: 0;
+    
 }
 
 .Button2{
-    width: 10%;
-    height: 17%;
     position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: 6;
+    top: 0;
+    left: 0;
+    
 }
 
 .Button3{
