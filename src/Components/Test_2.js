@@ -34,8 +34,9 @@ export default class Test2 extends Component {
       height:'',
       data:[],
       markerData:[[-78.49710828437009, 37.93041227710639],[-78.49693662299572, 37.93120774351641],[-78.49549895896115, 37.930767699330175]],
-      popupInfo:true
-      
+      popupInfo:true,
+      delete:false,
+      add: false
     }
     this.setDataState = this.setDataState.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
@@ -104,10 +105,10 @@ export default class Test2 extends Component {
   _onClickMethod(map,e){
     //console.log(e.lngLat)
     //this.setState({markerData:e.lngLat})
-  
+    if (this.state.add){
     var joined = this.state.markerData.concat([e.lngLat]);
     this.setState({ markerData: joined })
-    console.log(e)
+    console.log(e)}
   }
   
   _onDblClickMethod(e){
@@ -139,13 +140,14 @@ export default class Test2 extends Component {
 
   testclick(e, i){
  console.log(i)
+ if(this.state.delete){
+   this.setState({delete:false})
  this.setState(state => {
   const markerData = state.markerData.filter((item, j) => i !== j);
   return {
     markerData,
   };
-});
-
+});}
 };
 
 testPopup = (lat, lon) => {
@@ -170,12 +172,12 @@ _renderDrawTools = () => {
         <button
           className="mapbox-gl-draw_ctrl-draw-btn mapbox-gl-draw_polygon"
           title="Polygon tool (p)"
-          
+          onClick = {()=>this.setState({add:true})}
         />
         <button
           className="mapbox-gl-draw_ctrl-draw-btn mapbox-gl-draw_trash"
           title="Delete"
-         
+          onClick = {()=>this.setState({add:false,delete:true})}
         />
       </div>
     </div>
@@ -198,7 +200,7 @@ _renderDrawTools = () => {
         onViewportChange={this._onViewportChange}
         mapStyle = {MapStyle.mapboxDefault}
         mapboxApiAccessToken={TOKEN}
-        //onClick = {(e)=>this._onClickMethod(MapGL, e)}
+        onClick = {(e)=>this._onClickMethod(MapGL, e)}
       >
         <Marker key = {1} latitude={37.9307066927} longitude={-78.4989250540139} captureClick = {true} >
           <Pin size={20} key = {1} onClick = {()=>console.log('tt')}/>
