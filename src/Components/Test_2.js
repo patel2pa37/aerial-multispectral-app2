@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import DeckGL, {BitmapLayer} from 'deck.gl';
-import MapGL,{Marker, GeolocateControl, Popup} from '../../node_modules/react-map-gl/dist/es6/index'
+import MapGL,{Marker, GeolocateControl, Popup} from 'react-map-gl'
 import Pin from './NavigationBar/pin'
 import SideDrawer from './NavigationBar/SideDrawer'
 import './Style.css'
