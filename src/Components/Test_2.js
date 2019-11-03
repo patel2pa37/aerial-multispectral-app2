@@ -38,7 +38,7 @@ export default class Test2 extends Component {
       delete:false,
       add: false,
       inputData:[],
-      inputValue: ''
+      inputValue: []
     }
     this.setDataState = this.setDataState.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
@@ -150,7 +150,7 @@ export default class Test2 extends Component {
   };
 })
 }else{
-  this.setState({popupInfo:this.state.markerData[i]})
+  this.setState({popupInfo:[this.state.markerData[i],i]})
   
 }
 };
@@ -162,19 +162,25 @@ testPopup = (lat, lon) => {
     popupInfo && (<Popup
         tipSize={5}
         anchor="bottom"
-        longitude={this.state.popupInfo[0]}
-        latitude={ this.state.popupInfo[1]}
+        longitude={this.state.popupInfo[0][0]}
+        latitude={ this.state.popupInfo[0][1]}
         closeOnClick={false}
         onClose={() => this.setState({popupInfo: null})}
       >
-        <input value={this.state.inputValue} onChange={evt => this.updateInputValue(evt)}/>
+        <input value={this.state.inputValue[this.state.popupInfo[1]]} onChange={evt => this.updateInputValue(evt, this.state.popupInfo[1])}/>
       </Popup>))
 }
 
-updateInputValue = (evt) =>{
+updateInputValue = (evt,index) =>{
+  const updatedArray = [...this.state.inputValue];
+   updatedArray[index] = evt.target.value;
+   this.setState({
+    inputValue: updatedArray,
+    });
+/*
   this.setState({
     inputValue: evt.target.value
-  });
+  });*/
 }
 
 _renderDrawTools = () => {
