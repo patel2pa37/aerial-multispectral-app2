@@ -37,7 +37,8 @@ export default class Test2 extends Component {
       popupInfo:null,
       delete:false,
       add: false,
-      inputData:[]
+      inputData:[],
+      inputValue: ''
     }
     this.setDataState = this.setDataState.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
@@ -131,7 +132,6 @@ export default class Test2 extends Component {
 
   testRenderMarker(){
     const markerData_ = this.state.markerData
-    console.log(this.state.markerData)
     return this.state.markerData.map((child, index)=>
     <Marker latitude={this.state.markerData[index][1]} longitude={this.state.markerData[index][0]} >
       <Pin size={20} key={index} onClick={(e)=>this.testclick(e,index)} />
@@ -149,22 +149,32 @@ export default class Test2 extends Component {
     markerData,
   };
 })
+}else{
+  this.setState({popupInfo:this.state.markerData[i]})
+  
 }
 };
 
 testPopup = (lat, lon) => {
-  const {popupInfo} = this.state
-  return this.state.markerData.map((child, index)=> 
-  popupInfo && (<Popup
+  const {popupInfo} = this.state;
+
+  return (
+    popupInfo && (<Popup
         tipSize={5}
         anchor="bottom"
-        longitude={this.state.markerData[index][0]}
-        latitude={ this.state.markerData[index][1]}
+        longitude={this.state.popupInfo[0]}
+        latitude={ this.state.popupInfo[1]}
         closeOnClick={false}
         onClose={() => this.setState({popupInfo: null})}
       >
-        <input/>
+        <input value={this.state.inputValue} onChange={evt => this.updateInputValue(evt)}/>
       </Popup>))
+}
+
+updateInputValue = (evt) =>{
+  this.setState({
+    inputValue: evt.target.value
+  });
 }
 
 _renderDrawTools = () => {
