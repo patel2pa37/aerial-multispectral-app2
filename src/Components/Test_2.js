@@ -4,6 +4,7 @@ import MapGL,{Marker, GeolocateControl, Popup} from 'react-map-gl'
 import Pin from './NavigationBar/pin'
 import SideDrawer from './NavigationBar/SideDrawer'
 import './Style.css'
+import RGBA from './Images/rgba.png'
 //node_modules/react-map-gl/dist/es6/index
 
 const TOKEN = 'pk.eyJ1IjoicGF0ZWwycGEiLCJhIjoiY2sxMnkyczM0MDNxOTNiczluMnRyY2tsMiJ9.0maYtnNj3fQVEJ2BLfvJXA'; // Set your mapbox token here
@@ -37,7 +38,6 @@ export default class Test2 extends Component {
       popupInfo:null,
       delete:false,
       add: false,
-      inputData:[],
       inputValue: []
     }
     this.setDataState = this.setDataState.bind(this)
@@ -160,7 +160,7 @@ testPopup = (lat, lon) => {
 
   return (
     popupInfo && (<Popup
-        tipSize={5}
+        tipSize={8}
         anchor="bottom"
         longitude={this.state.popupInfo[0][0]}
         latitude={ this.state.popupInfo[0][1]}
@@ -220,7 +220,17 @@ _renderDrawTools = () => {
         mapboxApiAccessToken={TOKEN}
         onClick = {(e)=>this._onClickMethod(MapGL, e)}
       >
-      
+      <DeckGL
+            viewState={this.state.viewport}
+            layers={[
+              new BitmapLayer({
+                  id: 'bitmap-layer',
+                  bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
+                  image: RGBA,
+                  transparentColor: [0,0,0,0]
+                })
+            ]}
+          />
         {this.getImages()}
       {this.testRenderMarker()}
       {this.testPopup()}
