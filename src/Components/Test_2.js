@@ -4,6 +4,7 @@ import MapGL,{Marker, GeolocateControl, Popup} from 'react-map-gl'
 import Pin from './NavigationBar/pin'
 import SideDrawer from './NavigationBar/SideDrawer'
 import './Style.css'
+import testImage from './Images/rgba.png'
 import RGBA from './Images/merged.png'
 //node_modules/react-map-gl/dist/es6/index
 
@@ -227,6 +228,17 @@ _renderDrawTools = () => {
                   id: 'bitmap-layer',
                   bounds: [-78.4977459718528, 37.92754239722171,-78.49195042016456, 37.9330963517],
                   image: RGBA,
+                  transparentColor: [0,0,0,0]
+                })
+            ]}
+          />
+          <DeckGL
+            viewState={this.state.viewport}
+            layers={[
+              new BitmapLayer({
+                  id: 'bitmap-layer',
+                  bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
+                  image: testImage ,
                   transparentColor: [0,0,0,0]
                 })
             ]}
