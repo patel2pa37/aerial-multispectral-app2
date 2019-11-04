@@ -4,7 +4,7 @@ import MapGL,{Marker, GeolocateControl, Popup} from 'react-map-gl'
 import Pin from './NavigationBar/pin'
 import SideDrawer from './NavigationBar/SideDrawer'
 import './Style.css'
-import RGBA from './Images/rgba.png'
+import RGBA from './Images/merged.png'
 //node_modules/react-map-gl/dist/es6/index
 
 const TOKEN = 'pk.eyJ1IjoicGF0ZWwycGEiLCJhIjoiY2sxMnkyczM0MDNxOTNiczluMnRyY2tsMiJ9.0maYtnNj3fQVEJ2BLfvJXA'; // Set your mapbox token here
