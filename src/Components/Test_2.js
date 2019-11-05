@@ -227,8 +227,7 @@ _renderDrawTools = () => {
               new BitmapLayer({
                   id: 'bitmap-layer',
                   bounds: [-78.4977459718528, 37.92754239722171,-78.49195042016456, 37.9330963517],
-                  image: RGBA,
-                  transparentColor: [0,0,0,0]
+                  image: RGBA       
                 })
             ]}
           />
@@ -238,8 +237,7 @@ _renderDrawTools = () => {
               new BitmapLayer({
                   id: 'bitmap-layer',
                   bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
-                  image: testImage ,
-                  transparentColor: [0,0,0,0]
+                  image: testImage 
                 })
             ]}
           />
