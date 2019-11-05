@@ -232,17 +232,8 @@ _renderDrawTools = () => {
                 })
             ]}
           />
-          <DeckGL
-            viewState={this.state.viewport}
-            layers={[
-              new BitmapLayer({
-                  id: 'bitmap-layer',
-                  bounds: [-78.4989250540139,37.9307066927,-78.4950953896, 37.933022282],
-                  image: testImage 
-                })
-            ]}
-          />
-        {this.getImages()}
+          
+      {this.getImages()}
       {this.testRenderMarker()}
       {this.testPopup()}
     <GeolocateControl
