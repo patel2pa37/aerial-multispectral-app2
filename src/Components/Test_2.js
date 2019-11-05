@@ -220,6 +220,7 @@ _renderDrawTools = () => {
         mapStyle = {MapStyle.mapboxDefault}
         mapboxApiAccessToken={TOKEN}
         onClick = {(e)=>this._onClickMethod(MapGL, e)}
+        touchRotate = {true}
       >
       <DeckGL
             viewState={this.state.viewport}
