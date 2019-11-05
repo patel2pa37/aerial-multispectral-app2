@@ -222,7 +222,8 @@ _renderDrawTools = () => {
         onClick = {(e)=>this._onClickMethod(MapGL, e)}
         touchRotate = {true}
       >
-      <DeckGL
+            
+            {/* <DeckGL
             viewState={this.state.viewport}
             layers={[
               new BitmapLayer({
@@ -231,7 +232,7 @@ _renderDrawTools = () => {
                   image: RGBA       
                 })
             ]}
-          />
+          />*/}
           
       {this.getImages()}
       {this.testRenderMarker()}
